@@ -1,0 +1,17 @@
+﻿@using MVC.Models.DataModels
+
+<h1 class="my-4">Arama Sonucu</h1>
+<!-- Blog Post -->
+@{
+    foreach (Blogs item in (List<Blogs>)TempData["SearchData"])
+    {
+        <div class="card mb-4">
+            <div class="card-footer text-muted">
+                <a href="/Blog/Detay/@item.BlogId">
+                    @item.Title
+                </a>
+            </div>
+        </div>
+    }
+}
+

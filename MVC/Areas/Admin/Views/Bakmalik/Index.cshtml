@@ -1,0 +1,87 @@
+﻿@model IEnumerable<MVC.Models.DataModels.Blogs>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h1 class="my-md-5">Bloglar</h1>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+@*<tabl@*e class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Categories.CategoryName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PhotoUrl)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Created)
+        </th>
+        <th></th>
+    </tr>*@
+
+@foreach (var item in Model)
+{
+    <tr>
+        <div class="card mb-4">
+            <img class="card-img-top" src="@item.PhotoUrl" width="600" height="500">
+
+            <div class="card-body">
+                <h2 class="card-title">@item.Title</h2>
+                <p class="card-text">@item.Description.Substring(0, 1)...</p>
+                <a href="/Blog/Detay/@item.BlogId" class="btn btn-primary" target="_blank">Devamı &rarr;</a>
+            </div>
+            <div class="card-footer text-muted">
+                @item.Created
+            </div>
+            <div>
+
+                <a href="@Url.Action("AddOrEdit", "Blogs", new { id = item.BlogId})" class="btn btn-default"><i class="fa fa-pencil"></i>  Edit</a>
+                <a onclick="Delete(@item.BlogId)" class="btn btn-default"><i class="fa fa-trash"></i>  Delete</a>
+            </div>
+        </div>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.BlogId }) |
+            @Html.ActionLink("Details", "Details", new { id = item.BlogId }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.BlogId })
+        </td>
+    </tr>
+}
+
+@*</table>*@
+
+<!-- Pagination -->
+<ul class="pagination justify-content-center mb-4">
+    <li class="page-item">
+        <a class="page-link" href="#">&larr; Older</a>
+    </li>
+    <li class="page-item disabled">
+        <a class="page-link" href="#">Newer &rarr;</a>
+    </li>
+</ul>
+
+@section scripts{
+    <script>
+        $(function () {
+            var successMessage = '@TempData["SuccessMessage"]'
+            if (successMessage !== '')
+                alertify.success(successMessage);
+        });
+
+        function Delete(id) {
+            alertify.confirm('Web Api CRUD Operations','Are You Sure to Delete this Record ?',function(){
+                window.location.href  = '@Url.Action("Delete","Blogs")/'+id;
+            },null );
+        }
+    </script>
+}
+

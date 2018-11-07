@@ -1,0 +1,22 @@
+﻿@*@using MVC.Models.ViewModels*@
+
+@*@model SearchVM*@
+
+@using (Html.BeginForm("Search", "Blog", FormMethod.Post))
+{
+    <div class="card my-4">
+        <h5 class="card-header">Arama</h5>
+        <div class="card-body">
+            <div class="input-group">
+                @*@Html.TextBoxFor(x => x.Kelime, new {@class="form-control", placeholder="Kelime girin..." })*@
+                <input type="text" name="txtSearch" />
+                <span class="input-group-btn">
+                    <button class="btn btn-secondary" type="submit">Ara!</button>
+                </span>
+            </div>
+        </div>
+    </div>
+}
+
+
+

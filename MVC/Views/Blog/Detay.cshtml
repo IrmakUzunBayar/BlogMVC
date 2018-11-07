@@ -1,0 +1,73 @@
+﻿@using MVC.Models.ViewModels
+@using MVC.Models.DataModels
+@model BlogCommentVM
+
+
+@{
+    if (ViewBag.Success == "True")
+    {
+        <div class="alert alert-success alert-dismissible">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Başarılı ! </strong>Yorum kaydedildi.
+        </div>
+    }
+    else if (ViewBag.Success == "False")
+    {
+        <div class="alert alert-danger alert-dismissible">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Hata ! </strong>Hata olustu !
+        </div>
+    }
+}
+
+
+<!-- Title -->
+<h1 class="mt-4">@Model.Blogs.Title</h1>
+<!-- Author -->
+<hr>
+<!-- Date/Time -->
+<p>@Model.Blogs.Created</p>
+<hr>
+
+<!-- Preview Image -->
+<img class="img-fluid rounded" src="@Model.Blogs.PhotoUrl" width="900" height="300">
+<hr>
+
+<!-- Post Content -->
+<p class="lead">@Model.Blogs.Description</p>
+<hr>
+
+<!-- Comments Form -->
+@using (Html.BeginForm("Detay", "Blog", FormMethod.Post))
+{
+    <div class="card my-4">
+        <h5 class="card-header">Yorum Yazın...</h5>
+        <div class="card-body">
+            <div class="form-group">
+                @Html.TextAreaFor(x => x.Comment.Comment, new { @class = "form-control", rows = "3" })
+            </div>
+            <button type="submit" class="btn btn-primary">Gönder</button>
+        </div>
+    </div>
+}
+
+
+
+@{
+    foreach (Comments item in Model.Comments)
+    {
+        <!-- Single Comment -->
+        <div class="media mb-4">
+            <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+            <div class="media-body">
+                <h5 class="mt-0">Crazy Mahmut 98</h5>
+                @item.Comment
+            </div>
+        </div>
+    }
+}
+
+
+
+
+
